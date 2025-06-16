@@ -80,7 +80,7 @@ def type_build(value):
         return "mid_rise"
     elif 5 < value <= 9:
         return "multy_story"
-    elif 9 < value <= 25:
+    elif 9 < value <= 50:
         return "high_rise"
 
 def transform(**kwargs):
