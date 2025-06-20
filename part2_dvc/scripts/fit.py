@@ -32,9 +32,6 @@ def prepare_data(data):
     # приведем ее к типу float
     data['dist_origin_dest'] = data['dist_origin_dest'].map(lambda x: x.km)
 
-    # удалим служебные колонки и уже не нужные колонки с координататми
-    data.drop(columns=['latitude', 'longitude', 'latitude_2', 'longitude_2'], inplace=True) 
-
     return data
 
 def get_geo_station_metro():
@@ -63,7 +60,7 @@ def get_geo_station_metro():
                 })
         df_station = pd.DataFrame(stations)
 
-        df_station.to_csv("../data/moscow_metro_stations.csv", index=False, encoding='utf-8')
+        df_station.to_csv("./data/moscow_metro_stations.csv", index=False, encoding='utf-8')
         
         # Оставляем нужные столбцы и переименовываем
         moscow_stations = df_station.drop(columns=['id', 'line_id', 'line_name', 'line_color'])
@@ -87,8 +84,8 @@ def calculate_distance_to_nearest_metro(data, moscow_stations):
 
     # Ищем ближайшую станцию
     distances_rad, _ = tree.query(flat_coords, k=1)
-    # Переводим в километры (радиус Земли ~6371 км)
-    data["distance_to_metro_fast"] = distances_rad[:, 0] * 6371
+    # Переводим в метры (радиус Земли ~6371 км)
+    data["distance_to_metro_fast"] = distances_rad[:, 0] * 6371000
 
     # удалим служебные колонки и уже не нужные колонки с координататми
     data.drop(columns=['latitude', 'longitude', 'latitude_2', 'longitude_2'], inplace=True) 
@@ -110,6 +107,10 @@ def fit_model():
     data = prepare_data(data)
     moscow_stations = get_geo_station_metro()
     data = calculate_distance_to_nearest_metro(data, moscow_stations)
+
+    # сохранение полученных/модифицированных данных на шаге
+    os.makedirs('data', exist_ok=True)
+    data.to_csv('data/update_data.csv', index=None)
 
     # обучение модели
     y = data['price']

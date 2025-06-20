@@ -33,7 +33,7 @@ def get_data():
 
     # 3.3 — основная логика
     conn = create_connection()
-    data = pd.read_sql('select * from clean_cost_estimate', conn, index_col=params['id'])
+    data = pd.read_sql('select * from clean_cost_estimate', conn, index_col=params['index_col'])
     conn.dispose()
 
     # 3.4 — сохранение результата шага

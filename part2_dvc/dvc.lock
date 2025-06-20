@@ -1,0 +1,97 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python scripts/data.py
+    deps:
+    - path: scripts/data.py
+      hash: md5
+      md5: 1b0037f520005cf4f5b78d7a389d8195
+      size: 1467
+    params:
+      params.yaml:
+        index_col: id
+        retrain: true
+    outs:
+    - path: data/initial_data.csv
+      hash: md5
+      md5: 622fdafa7819875eac810572d0977a00
+      size: 16539771
+  fit_model:
+    cmd: python scripts/fit.py
+    deps:
+    - path: data/initial_data.csv
+      hash: md5
+      md5: 622fdafa7819875eac810572d0977a00
+      size: 16539771
+    - path: scripts/fit.py
+      hash: md5
+      md5: b530bc40aefa6e9fe1fcaa0ce6c950d4
+      size: 8815
+    params:
+      params.yaml:
+        depth: 8
+        early_stopping_rounds: 50
+        handle_unknown: use_encoded_value
+        index_col: id
+        iterations: 1000
+        learning_rate: 0.05
+        n_estimators: 100
+        one_hot_drop: if_binary
+        retrain: true
+        target_col: price
+        unknown_value: -1
+        verbose: 100
+    outs:
+    - path: models/fitted_model_CBR.pkl
+      hash: md5
+      md5: 16566ff19df9b562321d7953a3e0064d
+      size: 4510006
+    - path: models/fitted_model_LR.pkl
+      hash: md5
+      md5: 9b1f07b753dd36a8d01daa766e489f4f
+      size: 6182
+  evaluate_model:
+    cmd: python scripts/evaluate.py
+    deps:
+    - path: models/fitted_model_CBR.pkl
+      hash: md5
+      md5: 16566ff19df9b562321d7953a3e0064d
+      size: 4510006
+    - path: models/fitted_model_LR.pkl
+      hash: md5
+      md5: 9b1f07b753dd36a8d01daa766e489f4f
+      size: 6182
+    - path: models/fitted_model_RFR.pkl
+      hash: md5
+      md5: dfddfa92d1911eb37a4c18898ed91398
+      size: 997941751
+    - path: scripts/evaluate.py
+      hash: md5
+      md5: b3668a808bdf1e1a26cafc0b0ebb0e0c
+      size: 1874
+    params:
+      params.yaml:
+        index_col: id
+        metrics:
+        - r2
+        - neg_mean_absolute_error
+        - neg_root_mean_squared_error
+        n_jobs: -1
+        n_splits: 5
+        random_state: 42
+        retrain: true
+        shuffle: true
+        target_col: price
+    outs:
+    - path: cv_results/cv_res_CBR.json
+      hash: md5
+      md5: 55e26dc1c9e4f00e18365e2657ad7219
+      size: 291
+    - path: cv_results/cv_res_LR.json
+      hash: md5
+      md5: 5c7f225d504b9e95d7e78e7bff5917e4
+      size: 289
+    - path: cv_results/cv_res_RFR.json
+      hash: md5
+      md5: e23f0ed0cde6b916632a5bcc8ea9aa14
+      size: 293

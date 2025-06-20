@@ -13,13 +13,13 @@ def evaluate_model():
         params = yaml.safe_load(fd) 
 
     # загружаем результат шага 1: inital_data.csv
-    data = pd.read_csv('data/initial_data.csv')
+    data = pd.read_csv('data/update_data.csv')
 
     # загружаем результат шага 2: загрузка модели
     with open('models/fitted_model_CBR.pkl', 'rb') as fd:
         pipeline = joblib.load(fd)
     
-    with open('models/fitted_model_LR.pkl.pkl', 'rb') as fd:
+    with open('models/fitted_model_LR.pkl', 'rb') as fd:
         pipeline_lr = joblib.load(fd)
 
     with open('models/fitted_model_RFR.pkl', 'rb') as fd:
