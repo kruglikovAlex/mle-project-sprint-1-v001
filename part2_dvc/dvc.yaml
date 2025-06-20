@@ -33,6 +33,7 @@ stages:
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
+      - data/update_data.csv
       - models/fitted_model_CBR.pkl
       - models/fitted_model_LR.pkl
       - models/fitted_model_RFR.pkl

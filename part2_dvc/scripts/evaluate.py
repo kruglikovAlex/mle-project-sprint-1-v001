@@ -12,7 +12,7 @@ def evaluate_model():
     with open('params.yaml', 'r') as fd:
         params = yaml.safe_load(fd) 
 
-    # загружаем результат шага 1: inital_data.csv
+    # загружаем результат шага 1: update_data.csv
     data = pd.read_csv('data/update_data.csv')
 
     # загружаем результат шага 2: загрузка модели
@@ -28,6 +28,7 @@ def evaluate_model():
     # Проверка качества на кросс-валидации
     cv_strategy = KFold(n_splits=params['n_splits'], shuffle=params['shuffle'], random_state=params['random_state'])
     
+    # циклом обрабатываем все модели
     for name, pipl in [('CBR', pipeline), ('LR', pipeline_lr), ('RFR', pipeline_rfr)]:
         cv_res = cross_validate(
             pipl,

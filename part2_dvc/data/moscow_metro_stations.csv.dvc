@@ -1,0 +1,9 @@
+outs:
+- md5: 3eb3ae02a142910e328ab3fafe81a29e
+  size: 37950
+  hash: md5
+  path: moscow_metro_stations.csv
+  cloud:
+    yandex_pract_storage:
+      etag: 3eb3ae02a142910e328ab3fafe81a29e
+      version_id: '0006380343211523'

@@ -1,0 +1,9 @@
+outs:
+- md5: b1d05dd3655bb1ee218a3d750ea86d03
+  size: 15751193
+  hash: md5
+  path: update_data.csv
+  cloud:
+    yandex_pract_storage:
+      etag: b1d05dd3655bb1ee218a3d750ea86d03
+      version_id: 00063803432093DB

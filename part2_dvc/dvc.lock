@@ -5,8 +5,8 @@ stages:
     deps:
     - path: scripts/data.py
       hash: md5
-      md5: 1b0037f520005cf4f5b78d7a389d8195
-      size: 1467
+      md5: 784200dae76c5374e4759369b74e0ae9
+      size: 1444
     params:
       params.yaml:
         index_col: id
@@ -15,7 +15,11 @@ stages:
     - path: data/initial_data.csv
       hash: md5
       md5: 622fdafa7819875eac810572d0977a00
-      size: 16539771
+      size: 827241
+      cloud:
+        yandex_pract_storage:
+          etag: 487948886135418e289ab228d3ecf1ab
+          version_id: 0006372A82EB22C8
   fit_model:
     cmd: python scripts/fit.py
     deps:
@@ -25,8 +29,8 @@ stages:
       size: 16539771
     - path: scripts/fit.py
       hash: md5
-      md5: b530bc40aefa6e9fe1fcaa0ce6c950d4
-      size: 8815
+      md5: 1b82c09547822b0b6175fb282e946a0e
+      size: 8878
     params:
       params.yaml:
         depth: 8
@@ -44,18 +48,30 @@ stages:
     outs:
     - path: models/fitted_model_CBR.pkl
       hash: md5
-      md5: 16566ff19df9b562321d7953a3e0064d
+      md5: bffce8716073ed28a7e3122ec33d976b
       size: 4510006
+      cloud:
+        yandex_pract_storage:
+          etag: bffce8716073ed28a7e3122ec33d976b
+          version_id: 000638032FB0CE42
     - path: models/fitted_model_LR.pkl
       hash: md5
       md5: 9b1f07b753dd36a8d01daa766e489f4f
       size: 6182
+      cloud:
+        yandex_pract_storage:
+          etag: 9b1f07b753dd36a8d01daa766e489f4f
+          version_id: 000638032FAEE186
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
+    - path: data/update_data.csv
+      hash: md5
+      md5: b1d05dd3655bb1ee218a3d750ea86d03
+      size: 15751193
     - path: models/fitted_model_CBR.pkl
       hash: md5
-      md5: 16566ff19df9b562321d7953a3e0064d
+      md5: bffce8716073ed28a7e3122ec33d976b
       size: 4510006
     - path: models/fitted_model_LR.pkl
       hash: md5
@@ -67,8 +83,8 @@ stages:
       size: 997941751
     - path: scripts/evaluate.py
       hash: md5
-      md5: b3668a808bdf1e1a26cafc0b0ebb0e0c
-      size: 1874
+      md5: a40a026aa48b93ad501cf27d0feb2bee
+      size: 1938
     params:
       params.yaml:
         index_col: id
@@ -85,13 +101,25 @@ stages:
     outs:
     - path: cv_results/cv_res_CBR.json
       hash: md5
-      md5: 55e26dc1c9e4f00e18365e2657ad7219
-      size: 291
+      md5: 7fdcba5eb75024a7e8ddc62cdaf116a3
+      size: 290
+      cloud:
+        yandex_pract_storage:
+          etag: 7fdcba5eb75024a7e8ddc62cdaf116a3
+          version_id: 000638032FAE9B81
     - path: cv_results/cv_res_LR.json
       hash: md5
-      md5: 5c7f225d504b9e95d7e78e7bff5917e4
-      size: 289
+      md5: 419a604ac3d6fed73a3304693628659a
+      size: 288
+      cloud:
+        yandex_pract_storage:
+          etag: 419a604ac3d6fed73a3304693628659a
+          version_id: 000638032FAD661C
     - path: cv_results/cv_res_RFR.json
       hash: md5
-      md5: e23f0ed0cde6b916632a5bcc8ea9aa14
-      size: 293
+      md5: cd240e3346a2f2f2249b81d58eaefecf
+      size: 292
+      cloud:
+        yandex_pract_storage:
+          etag: cd240e3346a2f2f2249b81d58eaefecf
+          version_id: 000638032FAECFA3

@@ -63,6 +63,7 @@ def get_geo_station_metro():
         df_station.to_csv("./data/moscow_metro_stations.csv", index=False, encoding='utf-8')
         
         # Оставляем нужные столбцы и переименовываем
+        # столбцыслужебные не удаляем
         moscow_stations = df_station.drop(columns=['id', 'line_id', 'line_name', 'line_color'])
         moscow_stations.columns = ['station_name', 'lat', 'lon']
 

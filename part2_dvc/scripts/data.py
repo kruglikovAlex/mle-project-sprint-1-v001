@@ -1,6 +1,5 @@
 ## scripts/data.py
 
-# 1 — импорты
 import pandas as pd
 from sqlalchemy import create_engine
 import os
