@@ -1,0 +1,52 @@
+# dvc.yaml
+stages:
+  get_data:
+    cmd: python scripts/data.py
+    deps:
+      - scripts/data.py
+    params:
+      - index_col
+      - retrain
+    outs:
+      - data/initial_data.csv
+  fit_model:
+    cmd: python scripts/fit.py
+    deps:
+      - data/initial_data.csv
+      - scripts/fit.py
+    params:
+      - index_col
+      - target_col
+      - one_hot_drop
+      - iterations
+      - learning_rate
+      - depth
+      - verbose
+      - early_stopping_rounds
+      - handle_unknown
+      - unknown_value
+      - n_estimators
+      - retrain
+    outs:
+      - models/fitted_model_CBR.pkl
+      - models/fitted_model_LR.pkl
+  evaluate_model:
+    cmd: python scripts/evaluate.py
+    deps:
+      - models/fitted_model_CBR.pkl
+      - models/fitted_model_LR.pkl
+      - models/fitted_model_RFR.pkl
+      - scripts/evaluate.py
+    params:
+      - index_col
+      - target_col
+      - n_splits
+      - n_jobs
+      - shuffle
+      - random_state
+      - metrics
+      - retrain
+    outs:
+      - cv_results/cv_res_CBR.json
+      - cv_results/cv_res_LR.json 
+      - cv_results/cv_res_RFR.json 
